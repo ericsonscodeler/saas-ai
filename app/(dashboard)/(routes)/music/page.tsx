@@ -1,53 +1,55 @@
-"use client";
+'use client'
 
-import * as z from "zod";
-import axios from "axios";
-import { Music } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { ChatCompletionRequestMessage } from "openai";
-import { Heading } from "@/components/heading";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import * as z from 'zod'
+import axios from 'axios'
+import { Music } from 'lucide-react'
+import { useForm } from 'react-hook-form'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { ChatCompletionRequestMessage } from 'openai'
+import { Heading } from '@/components/heading'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 
-
-import { formSchema } from "./constants";
-import { Empty } from "@/components/empty";
-import { Loader } from "@/components/loader";
-
+import { formSchema } from './constants'
+import { Empty } from '@/components/empty'
+import { Loader } from '@/components/loader'
+import { useProModal } from '@/hooks/use-pro-modal'
 
 const MusicPage = () => {
-  const router = useRouter();
-  const [music, setMusic] = useState<string>();
+  const router = useRouter()
+  const proModal = useProModal()
+  const [music, setMusic] = useState<string>()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      prompt: ""
-    }
-  });
+      prompt: '',
+    },
+  })
 
-  const isLoading = form.formState.isSubmitting;
-  
+  const isLoading = form.formState.isSubmitting
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setMusic(undefined)
-    
-      const response = await axios.post('/api/music', values);
+
+      const response = await axios.post('/api/music', values)
 
       setMusic(response.data.audio)
-      form.reset();
+      form.reset()
     } catch (error: any) {
-     console.log(error)
+      if (error?.response?.status === 403) {
+        proModal.onOpen()
+      }
     } finally {
-      router.refresh();
+      router.refresh()
     }
   }
 
-  return ( 
+  return (
     <div>
       <Heading
         title="Music Generation"
@@ -59,8 +61,8 @@ const MusicPage = () => {
       <div className="px-4 lg:px-8">
         <div>
           <Form {...form}>
-            <form 
-              onSubmit={form.handleSubmit(onSubmit)} 
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
               className="
                 rounded-lg 
                 border 
@@ -81,15 +83,20 @@ const MusicPage = () => {
                     <FormControl className="m-0 p-0">
                       <Input
                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
-                        disabled={isLoading} 
-                        placeholder="Piano solo" 
+                        disabled={isLoading}
+                        placeholder="Piano solo"
                         {...field}
                       />
                     </FormControl>
                   </FormItem>
                 )}
               />
-              <Button className="col-span-12 lg:col-span-2 w-full" type="submit" disabled={isLoading} size="icon">
+              <Button
+                className="col-span-12 lg:col-span-2 w-full"
+                type="submit"
+                disabled={isLoading}
+                size="icon"
+              >
                 Generate
               </Button>
             </form>
@@ -103,19 +110,18 @@ const MusicPage = () => {
           )}
           {!music && !isLoading && (
             <div>
-              <Empty label="No music generated."/>
+              <Empty label="No music generated." />
             </div>
           )}
           {music && (
             <audio controls className="w-full mt-8">
-              <source src={music}/>
+              <source src={music} />
             </audio>
           )}
         </div>
       </div>
     </div>
-   );
+  )
 }
- 
-export default MusicPage;
 
+export default MusicPage

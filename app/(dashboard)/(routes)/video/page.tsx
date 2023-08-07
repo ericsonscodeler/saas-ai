@@ -1,52 +1,54 @@
-"use client";
+'use client'
 
-import * as z from "zod";
-import axios from "axios";
-import { Video } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Heading } from "@/components/heading";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import * as z from 'zod'
+import axios from 'axios'
+import { Video } from 'lucide-react'
+import { useForm } from 'react-hook-form'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Heading } from '@/components/heading'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 
-
-import { formSchema } from "./constants";
-import { Empty } from "@/components/empty";
-import { Loader } from "@/components/loader";
-
+import { formSchema } from './constants'
+import { Empty } from '@/components/empty'
+import { Loader } from '@/components/loader'
+import { useProModal } from '@/hooks/use-pro-modal'
 
 const VideoPage = () => {
-  const router = useRouter();
-  const [video, setVideo] = useState<string>();
+  const router = useRouter()
+  const proModal = useProModal()
+  const [video, setVideo] = useState<string>()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      prompt: ""
-    }
-  });
+      prompt: '',
+    },
+  })
 
-  const isLoading = form.formState.isSubmitting;
-  
+  const isLoading = form.formState.isSubmitting
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       setVideo(undefined)
-    
-      const response = await axios.post('/api/video', values);
+
+      const response = await axios.post('/api/video', values)
 
       setVideo(response.data[0])
-      form.reset();
+      form.reset()
     } catch (error: any) {
-     console.log(error)
+      if (error?.response?.status === 403) {
+        proModal.onOpen()
+      }
     } finally {
-      router.refresh();
+      router.refresh()
     }
   }
 
-  return ( 
+  return (
     <div>
       <Heading
         title="Video Generation"
@@ -58,8 +60,8 @@ const VideoPage = () => {
       <div className="px-4 lg:px-8">
         <div>
           <Form {...form}>
-            <form 
-              onSubmit={form.handleSubmit(onSubmit)} 
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
               className="
                 rounded-lg 
                 border 
@@ -80,15 +82,20 @@ const VideoPage = () => {
                     <FormControl className="m-0 p-0">
                       <Input
                         className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
-                        disabled={isLoading} 
-                        placeholder="Clown fish swimming around a coral reef " 
+                        disabled={isLoading}
+                        placeholder="Clown fish swimming around a coral reef "
                         {...field}
                       />
                     </FormControl>
                   </FormItem>
                 )}
               />
-              <Button className="col-span-12 lg:col-span-2 w-full" type="submit" disabled={isLoading} size="icon">
+              <Button
+                className="col-span-12 lg:col-span-2 w-full"
+                type="submit"
+                disabled={isLoading}
+                size="icon"
+              >
                 Generate
               </Button>
             </form>
@@ -102,19 +109,21 @@ const VideoPage = () => {
           )}
           {!video && !isLoading && (
             <div>
-              <Empty label="No video generated."/>
+              <Empty label="No video generated." />
             </div>
           )}
           {video && (
-            <video controls className="w-full aspect-video mt-8 rounded-lg border bg-black">
-              <source src={video}/>
+            <video
+              controls
+              className="w-full aspect-video mt-8 rounded-lg border bg-black"
+            >
+              <source src={video} />
             </video>
           )}
         </div>
       </div>
     </div>
-   );
+  )
 }
- 
-export default VideoPage;
 
+export default VideoPage
