@@ -6,13 +6,12 @@ import { Music } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { ChatCompletionRequestMessage } from 'openai'
 import { Heading } from '@/components/heading'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
-
+import { toast } from 'react-hot-toast'
 import { formSchema } from './constants'
 import { Empty } from '@/components/empty'
 import { Loader } from '@/components/loader'
@@ -43,6 +42,8 @@ const MusicPage = () => {
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModal.onOpen()
+      } else {
+        toast.error('Something went wrong')
       }
     } finally {
       router.refresh()

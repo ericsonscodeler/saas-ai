@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { cn } from '@/lib/utils'
-
+import { toast } from 'react-hot-toast'
 import ReactMarkdown from 'react-markdown'
 
 import { formSchema } from './constants'
@@ -51,6 +51,8 @@ const CodePage = () => {
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModal.onOpen()
+      } else {
+        toast.error('Something went wrong')
       }
     } finally {
       router.refresh()

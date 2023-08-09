@@ -23,6 +23,8 @@ import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { Button } from './ui/button'
 
+import { toast } from 'react-hot-toast'
+
 import axios from 'axios'
 import { useState } from 'react'
 
@@ -75,7 +77,7 @@ export const ProModal = () => {
 
       window.location.href = response.data.url
     } catch (error: any) {
-      console.log(error, 'STRIPE_CLIENT_ERROR')
+      toast.error('Something went wrong')
     } finally {
       setLoading(false)
     }
@@ -115,6 +117,7 @@ export const ProModal = () => {
             className="w-full"
             size="lg"
             variant="premium"
+            disabled={loading}
           >
             Upgrade
             <Zap className="w-4 h-4 ml-2 fill-white" />
