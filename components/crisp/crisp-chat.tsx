@@ -6,7 +6,7 @@ import { Crisp } from 'crisp-sdk-web'
 
 export const CrispChat = () => {
   useEffect(() => {
-    Crisp.configure('b00d81ab-6075-43be-a085-dec60c88aefd')
+    Crisp.configure(process.env.CRISP_CHAT_KEY)
   }, [])
 
   return null
