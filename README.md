@@ -17,7 +17,7 @@ yarn dev
 # or
 pnpm dev
 ```
-Initialize prisma
+Initialize prisma studio
 
 ```bash
 npx prisma studio
