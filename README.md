@@ -18,6 +18,7 @@ Features:
 - Rotas POST, DELETE e GET (app/api)
 - Armazenar no banco de dados informações utilizando Prisma (sem a necessidade de um api back-end)
 - Estrutura de pastas do NEXT 13.
+- Chat para suporte utilizando Crisp
 
 
 
