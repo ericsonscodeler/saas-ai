@@ -5,6 +5,7 @@ import { checkApiLimit, increaseApiLimit } from '@/lib/api-limit'
 import { checkSubscription } from '@/lib/subscription'
 
 const replicate = new Replicate({
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   auth: process.env.REPLICATE_API_TOKEN!,
 })
 

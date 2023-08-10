@@ -1,6 +1,5 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import {
   Code,
   VideoIcon,
@@ -9,8 +8,6 @@ import {
   MessageSquare,
   ArrowRight,
 } from 'lucide-react'
-import { UserButton } from '@clerk/nextjs'
-import Image from 'next/image'
 import { Card } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'

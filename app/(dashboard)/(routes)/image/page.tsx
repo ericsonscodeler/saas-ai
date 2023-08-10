@@ -52,6 +52,7 @@ const ImagePage = () => {
       setImages(urls)
 
       form.reset()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModal.onOpen()

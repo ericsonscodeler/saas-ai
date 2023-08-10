@@ -48,6 +48,7 @@ const CodePage = () => {
       setMessages((current) => [...current, userMessage, response.data])
 
       form.reset()
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (error?.response?.status === 403) {
         proModal.onOpen()
@@ -137,12 +138,12 @@ const CodePage = () => {
                 {message.role === 'user' ? <UserAvatar /> : <BotAvatar />}
                 <ReactMarkdown
                   components={{
-                    pre: ({ node, ...props }) => (
+                    pre: ({ ...props }) => (
                       <div className="overflow-auto w-full my-2 bg-black/10 p-2 rounded-lg">
                         <pre {...props} />
                       </div>
                     ),
-                    code: ({ node, ...props }) => (
+                    code: ({ ...props }) => (
                       <code className="bg-black/10 rounded-lg p-1" {...props} />
                     ),
                   }}

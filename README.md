@@ -1,4 +1,3 @@
-
 ## Getting Started
 
 ```bash
@@ -17,6 +16,7 @@ yarn dev
 # or
 pnpm dev
 ```
+
 Initialize prisma studio
 
 ```bash
@@ -28,3 +28,4 @@ Initialize stripe for dev
 ```bash
 stripe listen --forward-to localhost/3000/api/webhook
 
+```
