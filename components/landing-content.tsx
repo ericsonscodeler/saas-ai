@@ -9,30 +9,6 @@ const testimonials = [
     title: 'Front-end Software Developer',
     description: `This is the best application I've used!`,
   },
-  {
-    name: 'Ericson Scodeler',
-    avatar: 'E',
-    title: 'Front-end Software Developer',
-    description: `This is the best application I've used!`,
-  },
-  {
-    name: 'Ericson Scodeler',
-    avatar: 'E',
-    title: 'Front-end Software Developer',
-    description: `This is the best application I've used!`,
-  },
-  {
-    name: 'Ericson Scodeler',
-    avatar: 'E',
-    title: 'Front-end Software Developer',
-    description: `This is the best application I've used!`,
-  },
-  {
-    name: 'Ericson Scodeler',
-    avatar: 'E',
-    title: 'Front-end Software Developer',
-    description: `This is the best application I've used!`,
-  },
 ]
 
 export const LandingContent = () => {
