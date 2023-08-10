@@ -16,7 +16,7 @@ Features:
 - Plataforma de Pagamento Stripe para assinaturas.
 - Limitar quantidade de request para api para plano gratuíto.
 - Rotas POST, DELETE e GET (app/api)
-- Armazenar no banco de dados informações utilizando Prisma  (WITHOUT API! like Magic!)
+- Armazenar no banco de dados informações utilizando Prisma (sem a necessidade de um api back-end)
 - Estrutura de pastas do NEXT 13.
 
 
