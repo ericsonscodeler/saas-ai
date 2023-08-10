@@ -51,8 +51,9 @@ export async function POST(req: Request) {
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string,
     )
-
     await prismadb.userSubscription.update({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore: Unreachable code error
       where: {
         stripeSubscriptionId: subscription.id,
       },
